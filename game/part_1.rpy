@@ -243,7 +243,7 @@ label check_bus_schedule:
 label prepare_supplies:
     if asked_for_recipe==0:
         call pose_1c("Um..."+player+"?")
-        $ os.delete("../characters/cupcake_recipe.txt")
+        $ os.remove(config.basedir + "/characters/cupcake_recipe.txt")
         n "I can't find my cupcake recipe anywhere..."
         n "Can you check if it's in the game folder?"
         n "If you find it, copy it in the characters folder and choose this option again."
