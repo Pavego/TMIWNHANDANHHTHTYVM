@@ -39,7 +39,7 @@ label nat_welcome:
     call nat_welcoming
     call additional_questions
     call plot
-    call proof_of_concept_intro
+    #call proof_of_concept_intro
     return
 
 label nat_welcoming:

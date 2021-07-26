@@ -12,6 +12,8 @@ label start:
 
     $ _dismiss_pause = config.developer
 
+    $ chores=[False,False,False]
+    $ chore_names=["go to the bathroom","change clothes", "sort manga"]
 
     $ s_name = "Sayori"
     $ m_name = "Monika"
@@ -22,20 +24,18 @@ label start:
     $ style.say_dialogue = style.normal
     $ allow_skipping = True
     $ config.allow_skipping = True
-
+    $ n_outfit_mode = 0
+    $ n_outfits = ['b','b','']
+    $ n_outfit = 'b'
     if persistent.playthrough == 0:
-        jump nat_welcome
+        call nat_welcome
     elif persistent.playthrough == 1:
-        jump nat_intro
+        call nat_intro
+    call p1_start
+    call p2_start
+
 
 
 label endgame(pause_length=4.0):
-    $ quick_menu = False
-    stop music fadeout 2.0
-    scene black
-    show end
-    with dissolve_scene_full
-    pause pause_length
-    $ quick_menu = True
     return
 # Decompiled by unrpyc: https://github.com/CensoredUsername/unrpyc

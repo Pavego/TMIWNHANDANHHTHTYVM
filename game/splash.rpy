@@ -229,7 +229,7 @@ label splashscreen:
         scene white
         $ persistent.first_run = True
         $ persistent.endingsAchieved = [0, 0]
-        $ persistent.last_parfait = 0
+        $ persistent.next_parfait = 7001
 
     $ basedir = config.basedir.replace('\\', '/')
 

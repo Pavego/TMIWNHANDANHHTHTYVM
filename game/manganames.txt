@@ -1,0 +1,4 @@
+Parfait Girls,1,1000,8
+Re:Half,1,100,4
+Attack on Giant,1,100,2
+Half Metal Alchemist,201,300,2
