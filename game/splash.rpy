@@ -2,11 +2,15 @@ init python:
     menu_trans_time = 1
     splash_message_default = "This mod is not suitable for people\nwho don't enjoy slice-of-life content."
     splash_messages = [
-    "This mod is not suitable for people\nwho enjoyed the ending of Exit Music.",
     "Don't let Sayori eat your browser cookies!",
     "It's not like I'm glad you installed this mod or anything!",
     "I AM NOT CUTE!",
-    "Manga is literature."
+    "Manga is literature.",
+    "I hate these splashes.\nJUST START THE GAME ALREADY!",
+    "Have you read any good manga lately?",
+    "I use Portrait of Markov to straighten my desk.\n\n...\n\nDon't tell Yuri.",
+    "// TODO think of more splash messages",
+    "WHY ISN'T GITHUB DESKTOP REGISTERING MY CHANGES?\n\n...oh wait, I forgot to copy files to upload area"
     ]
 
 image splash_warning = ParameterizedText(style="splash_text", xalign=0.5, yalign=0.5)

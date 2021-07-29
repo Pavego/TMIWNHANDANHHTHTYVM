@@ -30,3 +30,9 @@ label p2_start:
     menu:
         "Goodbye, Natsuki!":
             $ renpy.quit()
+
+label p2_infront:
+    $ time+=75
+    call pose_1d('And here we are!')
+    n "Let me just check the time..."
+    n "[time]"
