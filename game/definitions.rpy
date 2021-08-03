@@ -1295,6 +1295,8 @@ image monika g2:
     repeat
 
 
+
+
 define narrator = Character(ctc="ctc", ctc_position="fixed")
 define mc = DynamicCharacter('player', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 define s = DynamicCharacter('s_name', image='sayori', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
@@ -1302,6 +1304,7 @@ define m = DynamicCharacter('m_name', image='monika', what_prefix='"', what_suff
 define n = DynamicCharacter('n_name', image='natsuki', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 define y = DynamicCharacter('y_name', image='yuri', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 define ny = Character('Nat & Yuri', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
+define protag = DynamicCharacter('protag_name', image='protag', what_prefix='"', what_suffix='"', ctc="ctc", ctc_position="fixed")
 
 define _dismiss_pause = config.developer
 
@@ -1337,7 +1340,7 @@ default s_name = "Sayori"
 default m_name = "Monika"
 default n_name = "Natsuki"
 default y_name = "Yuri"
-
+default protag_name = "Protag"
 
 
 default n_poemappeal = [0, 0, 0]
