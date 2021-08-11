@@ -10,7 +10,7 @@ init python:
     "Have you read any good manga lately?",
     "I use Portrait of Markov to straighten my desk.\n\n...\n\nDon't tell Yuri.",
     "// TODO think of more splash messages",
-    "WHY ISN'T GITHUB DESKTOP REGISTERING MY CHANGES?\n\n...oh wait, I forgot to copy files to upload area"
+    "flirt with shy girl how\n\nWAIT THIS IS NOT GOOGLE"
     ]
 
 image splash_warning = ParameterizedText(style="splash_text", xalign=0.5, yalign=0.5)

@@ -107,7 +107,7 @@ label rq_start:
             CQ=questions[current]
             current += 1
             ui.text("Question "+str(current)+" of "+str(qCount), style="poemgame_text", xpos=810, ypos=50, color='#000')
-            ui.text("Question "+str(current)+" of "+str(qCount), style="poemgame_text", xpos=100, ypos=100, color='#000')
+            ui.text(CQ.question, style="poemgame_text", xpos=100, ypos=100, color='#000')
             columnsize=8
             y_pos=ystart
             i=0

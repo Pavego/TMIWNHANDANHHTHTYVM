@@ -1,0 +1,6 @@
+label pose_{0}{1}(text):
+    if n_outfit=='b':
+        n {0}b{1} '[text]'
+    else:
+        n {0}{1} '[text]'
+    return

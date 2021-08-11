@@ -1,0 +1,48 @@
+How much flour do we need?
+0
+125 g
+340 g
+275 g
+240 g
+
+How much caster sugar do we need?
+3
+100 g
+200 g
+150 g
+125 g
+
+How much icing sugar do we need?
+0
+340 g
+135 g
+125 g
+125 kg
+
+What kind of butter do we need?
+0
+ROOM TEMPERATURE, unsalted
+ROOM TEMPERATURE, salted
+COOLED, salted
+SUPER HOT, super salty
+
+To what temperature should we pre-heat the oven?
+0
+170 Celsius
+338 Celsius
+170 Kelvin
+338 Kelvin
+
+How long do we need to bake the cupcakes?
+1
+15 minutes
+22 minutes
+30 minutes
+47 minutes
+
+How long should we refrigerate the cupcakes?
+3
+15 minutes
+1 hour
+4 hours
+DO NOT REFRIGERATE THE CUPCAKES!

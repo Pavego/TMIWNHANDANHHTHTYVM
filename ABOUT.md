@@ -1,6 +1,6 @@
 # The Mod In Which Natsuki Has A Nice Day And Nothing Horrible Happens To Her, Thank You Very Much
 
-## Version 0.2.1
+## Version 0.3.0
 
 ## About the mod
 

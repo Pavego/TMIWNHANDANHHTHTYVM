@@ -43,10 +43,12 @@ label update_time_display:
 
 label bedroom_loop:
     scene bg bedroom
-    show natsuki 1ba zorder 2 at h33
+    if n_outfit_mode==2:
+        show natsuki 1a zorder 2 at h33
+    else:
+        show natsuki 1ba zorder 2 at h33
     if time>=11*60+45:
         jump late_ending
-    call pose_1a('{nw}')
     call update_time_display
     menu:
         "Time: [time_display]"
@@ -114,7 +116,10 @@ label bedroom_loop:
                 hide natsuki
                 "Natsuki has a huge manga collection."
                 "Most of it is Parfait Girls, but there are also other slice-of life novels as well as...{nw}"
-                show natsuki 1b zorder 2 at h11
+                if n_outfit_mode==2:
+                    show natsuki 1b zorder 2 at h11
+                else:
+                    show natsuki 1bb zorder 2 at h11
                 call pose_1b("Hey! Are you listening to me?")
                 n "We need to put the manga back in order!"
                 n "Here, take this box and sort the manga in it alphabetically first and numerically second!"
@@ -202,7 +207,10 @@ label manga_loop_talk:
 
 label kitchen_loop_start:
     scene bg kitchen
-    show natsuki 1ba zorder 2 at h33
+    if n_outfit_mode==2:
+        show natsuki 1a zorder 2 at h33
+    else:
+        show natsuki 1ba zorder 2 at h33
     play music t6
     jump kitchen_loop
 
