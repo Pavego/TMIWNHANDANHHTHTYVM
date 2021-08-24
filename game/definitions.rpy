@@ -33,6 +33,8 @@ init python:
         except: open(config.basedir + "/characters/yuri.chr", "wb").write(renpy.file("yuri.chr").read())
         try: renpy.file("../characters/sayori.chr")
         except: open(config.basedir + "/characters/sayori.chr", "wb").write(renpy.file("sayori.chr").read())
+        try: renpy.file("../characters/protag.chr")
+        except: open(config.basedir + "/characters/protag.chr", "wb").write(renpy.file("protag.chr").read())
     def restore_relevant_characters():
         restore_all_characters()
         if persistent.playthrough == 1 or persistent.playthrough == 2:
