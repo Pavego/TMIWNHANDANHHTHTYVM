@@ -1,0 +1,5 @@
+0
+EndingNotFound
+This is an actual error, not an ending.
+If you are seeing this ingame, it means that an ending is missing somewhere in the code.
+Please report this bug using the form linked in the README.md file.

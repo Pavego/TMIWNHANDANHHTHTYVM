@@ -223,25 +223,29 @@ label p2_colorend:
 
     call cupcake_defense
     
+    play music t2
     scene bg kitchen with wipeleft_scene
     "When the duo is finally finished, Natsuki puts them all side by side to admire their work."
     if n_outfit_mode==2:
-        show natsuki 1l zorder 2 at h21
+        show natsuki 1l zorder 2 at h31
     else:
-        show natsuki 1bl zorder 2 at h21
+        show natsuki 1bl zorder 2 at h31
     n "Look at how pretty they are together!"
+    show protag 4c zorder 2 at h33
     protag 4c "Yeah, they are, aren't they?"
     call pose_1m("Uu... I wish I could have one now!")
     protag "Well, there's no reason you can't, right?"
     protag 3a "I don't see any harm in that."
     call pose_1c("Well, yeah, but...")
+    show sayori 1l zorder 2 at h32
     s "Hello everyone!"
     protag 1c "Hi, Sayori!"
+    show protag 1a zorder 3 at h33
     n "Sayori! What are you doing here?"
-    s "You know how <TODO: add dialogue>"
-    s "Hey, cupcakes are done!"
+    s 1q "Monika and I finished early, and I was in a sunny mood so..."
+    s 4l "Hey, cupcakes are done!"
     "Sayori immediately proceeds to reach for a tray of cupcakes."
-    n "Hey! You can't do that!"
+    call pose_4b("Hey! You can't do that!")
     n "[protag_name], stop her!"
     if outcome==-1:
         jump p2_neither_win
@@ -254,23 +258,47 @@ label p2_colorend:
 
 label p2_sayori_win:
     protag 3c "I'm sorry, Natsuki, but I'm afraid I can't do that."
-    n "WHAT?"
-    "<TODO: add planned thing>"
-    jump p2_pizza
+    call pose_4l("I'll do it myself, then!")
+    protag 1l "I can't let you do that, either..."
+    show protag 1l zorder 3 at h42
+    with wipeleft
+    scene n_cg3_base
+    show n_cg3_exp1
+    with dissolve_cg
+    hide sayori with wipeleft
+    protag "Sayori, take the cupcakes and go in the living room! I'll be right behind you!"
+    scene bg kitchen with dissolve_cg
+    jump p2_either_win
 
 label p2_protag_win:
     protag 3b "Sayori, I can't let you take these cupcakes..."
     call pose_1d("YEAH!")
     protag 1c "...because I'm going to take them instead!"
+    show sayori 1m zorder 2 at h32
     call pose_1c("WHAT?!?")
-    "<TODO: add dialogue>"
-    jump p2_pizza
+    "[protag_name] grabs a tray of cupcakes and escapes to the living room."
+    hide protag 
+    n "No, [protag_name]! You were supposed to bring balance to the literature club, not join her!"
+    s 1j "You better not eat all of them yourself, you meanie!"
+    hide sayori with wipeleft
+    jump p2_either_win
+
+label p2_either_win:
+    if n_outfit_mode==2:
+        show natsuki 1l zorder 2 at h11
+    else:
+        show natsuki 1bl zorder 2 at h11
+    call pose_4c("You can't tell which one of them is worse...")
+    call pose_4d("They really are made for each other, aren't they?")
+    return
 
 label p2_neither_win:
     protag 1b "She's right, Sayori."
     protag "These cupcakes are for the festival."
     protag 1a "Let's order pizza instead."
     n "Thank you, [protag_name]."
+    hide protag
+    hide sayori
     if outcome==2:
         jump p2_monika_win
     jump p2_pizza
@@ -283,8 +311,7 @@ label p2_monika_win:
     m "Nothing we do matters."
     m "Let me eat cupcakes in peace."
     protag 2t "Did you understand any of that?"
-    s "Nope."
-    s "Let's just leave them alone and order our pizza."
+    s "Nope. Let's just leave them alone and order our pizza."
     jump p2_pizza
 
 
@@ -297,26 +324,20 @@ label p2_pizza:
     s "(Sayori picks up the last piece of pizza.)"
     menu:
         "Ignore her.":
-            moddev "And that's the mod so far."
-            moddev "You might want to go back to see the lines for letting [protag_name] know, though..."
-            menu:
-                "Yeah!":
-                    jump p2_pizza
-                "Nah.":
-                    pass
+            pass
         "Let [protag_name] know.":
             n "Hey, [protag_name]!"
             n "Your girlfriend is being a food yandere again!"
-            # sayori shocked
             protag 1l "You can forget about getting that slice now, Natsuki."
+            # sayori shocked
             s "Wait, did you just say..."
             n "Oh."
             n "You see, Sayori..."
             n "{i}Yandere{/i} is a term used for a person who is initially loving and caring to someone they have a strong affec{nw}"
             s "No, not that word! The... uh... the g-word!"
-            "And that's the mod so far."
-    moddev "Thank you for playing this unfinished version of TMIWNHANDANHHTHTYVM!"
-    moddev "Make sure to use the form linked in the README to report any bugs!"
-    moddev "I hope I'll see you in the finished version of the mod!"
-    moddev "Bye!"
-    $ renpy.quit()
+            s "Did you tell her we're dating, [protag_name]?"
+            n "Oh, you two are finally admitting it?"
+            protag "Huh?"
+            n "You two have been acting like a couple for a year now!"
+            n "Not to mention it took both you and Monika to convince him to help one of us instead of you..."
+    return

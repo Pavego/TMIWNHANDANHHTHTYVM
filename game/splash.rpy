@@ -232,7 +232,7 @@ label splashscreen:
         pause 1.0
         scene white
         $ persistent.first_run = True
-        $ persistent.endingsAchieved = [0, 0]
+        $ persistent.endingsAchieved = [0]*420 # No, there are not 420 endings. I just don't want to have to come back here and rewrite this AGAIN.
         $ persistent.next_parfait = 7001
 
     $ basedir = config.basedir.replace('\\', '/')
