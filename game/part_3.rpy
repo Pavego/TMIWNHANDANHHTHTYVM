@@ -1,5 +1,4 @@
 label p3_start:
-    stop music
     show monika_bg zorder 1
     play music m1 noloop
     m "Hello again, [player]!"

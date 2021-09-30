@@ -18,12 +18,13 @@ label p2_start:
         $ currently_read_manga+=temp
         $ persistent.next_parfait+=temp
         $ current_time=mc_arrival_time # 12:00
+        $ pause(3)
         show protag 4c zorder 3 at h33
         protag "Oh, you're already here!"
     else:
         n "[protag_name] should be home by now..."
         n "I'll let him know I'm here!"
-        $ pause(5)
+        $ pause(1)
         $ current_time+=5 # between 12:05 and 12:50
         show protag 4c zorder 3 at h33
         n "'Sup?"
@@ -34,7 +35,7 @@ label p2_start:
     call char_s(ch_natsuki,"And this too...",1,'c')
     call showpoem(protag_casual_credit, music=False, revert_music=False)
     call char_s(ch_natsuki,"Also, SligtlySimple made the sprite you saw in the menu.",1,'d')
-    call char_s(ch_natsuki,"There's also a new {} sprite, but that one just didn't seem right to me.".format(protag_name),1,'b')
+    call char_s(ch_natsuki,"There's also a new MC sprite, but that one just didn't seem right to me.".format(protag_name),1,'b')
     call char_s(ch_natsuki,"Okay, we can continue now!",1,'d')
     play music t5
     protag 1n "..."
@@ -101,22 +102,23 @@ label p2_start:
     n "I was just trying to be a little nicer to you, you know."
     call char_s(ch_natsuki,"And just because I don't have a mature and sexy figure like Yuri doesn't mean you should treat me like--",1,'r')
     stop music
+    protag 1d "..."
     call char_s(ch_natsuki,"A-Ah--",1,'o')
     n "{i}(I really shouldn't have said that...){/i}"
-    play music t9
     protag 1d "Natsuki..."
     call char_s(ch_natsuki,"Forget it!",1,'p')
     n "I didn't say anything!"
     protag 1s "I should apologize."
     call char_s(ch_natsuki,"Eh?",1,'h')
+    play music t9
     protag "I appreciate that you were trying to be nicer."
     protag "I should have been a little more considerate, too."
-    stop music
     protag 1d "But also..."
     protag "If that's what you're thinking, then you should know that there are tons of guys who are into body types like yours."
     call char_s(ch_natsuki,"Ah...",1,'q')
     n "How would...you know that, anyway?"
     protag 1c "Just trust me on this one."
+    stop music
     n "..."
     call char_s(ch_natsuki,"...Gross.",5,'x')
     play music t7
@@ -141,13 +143,13 @@ label p2_start:
     n "The mixer isn't big enough to make all the batter at once, so we've had to do it several times."
     n "Meanwhile, I am making sure [protag_name] doesn't mess up my cupcakes..."
     if n_outfit_mode==2:
-        show natsuki 1k zorder 2 at h33
+        show natsuki 1k zorder 2 at h31
     else:
-        show natsuki 1bk zorder 2 at h33
+        show natsuki 1bk zorder 2 at h31
     call char_s(ch_natsuki,"{nw}",2,'k')
     n "[protag_name], where did you put the food coloring?"
     n "The batter's going in the oven soon, so I need to fill the trays."
-    show protag 4d zorder 2 at t22
+    show protag 4d zorder 2 at t33
     protag 4d "I think it's still in the bag next to the table."
     protag "What are you using it for?"
     call char_s(ch_natsuki,"To color the batter, of course!",4,'l')
@@ -194,10 +196,15 @@ label p2_colorend:
     $ current_time+=60 # between 14:00 and 15:30
     scene bg kitchen
     hide black as fadeout
-    n "Ahh, that smells so good!"
+    if n_outfit_mode==2:
+        show natsuki 1d zorder 2 at h31
+    else:
+        show natsuki 1bd zorder 2 at h31
+    call char_s(ch_natsuki,"Ahh, that smells so good!",1,'d')
     "The cupcakes are ready to be pulled out of the oven."
     "As soon as Natsuki opens the oven door, a blast of sweet-smelling warm air fills the room."
     call char_s(ch_natsuki,"Look at how cute they all look!",4,'l')
+    show protag 3c zorder 2 at h33
     protag 3c "They'll look even better once we add the icing."
     call char_s(ch_natsuki,"Not like you need to tell {i}me{/i} that!",2,'a')
     n "I brought decorating stuff, so I hope you can get creative."
@@ -441,10 +448,13 @@ label p2_conversation_loop:
                 call protag_and_sayori_talk
         "(Politely excuse yourself.)":
             n "This was nice, but I have to go home now."
-            s "Bye, Natsuki!"
-            protag "Take care on the way home!"
+            s 1x "Bye, Natsuki!"
+            protag 1c "Take care on the way home!"
             jump p2_end_cleanup
         "(Impolitely excuse yourself.)":
+            n "Okay, I'm bored. Bye everyone!"
+            s 1s "Bye, Natsuki!"
+            protag 1h "...???"
             jump p2_end_cleanup
     jump p2_conversation_loop
 
@@ -473,7 +483,11 @@ label talkative_ending:
 label p2_talktopic_first_date_protag:
     protag 1c "Do you remember our first date, Sayori?"
     s 1x "How could I forget?"
-    s 1x "We got caught in the rain because I got locked out of my own house. Whoops! hehe"
+    s 1x "..."
+    protag "Wait...you actually forgot?"
+    call char_s(ch_natsuki,"(Let's hope no one notices this part was hastily done in the last minute.)",1,'d')
+    call char_s(ch_natsuki,"(...)",1,'c')
+    call char_s(ch_natsuki,"(Did I think this out loud?)",1,'p')
     return
 
 label p2_talktopic_new_uses:
@@ -489,7 +503,11 @@ label p2_talktopic_new_uses:
 label p2_talktopic_first_date_natsuki:
     call char_s(ch_natsuki,"Do you two remember your first date?",1,'d')
     s 1x "How could I forget?"
-    s 1x ""
+    s 1x "..."
+    protag "Wait...you actually forgot?"
+    call char_s(ch_natsuki,"(Let's hope no one notices this part was hastily done in the last minute.)",1,'d')
+    call char_s(ch_natsuki,"(...)",1,'c')
+    call char_s(ch_natsuki,"(Did I think this out loud?)",1,'p')
     return
 
 label p2_talktopic_poems:

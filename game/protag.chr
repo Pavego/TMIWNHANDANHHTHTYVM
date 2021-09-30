@@ -1,11 +1,56 @@
 label p3_start:
+    show monika_room zorder 0
+    play music t3
+    show natsuki 1c zorder 2 at t11
+    n 1c "And that's it for TMIWNHANDANHHTHTYVM!"
+    n "Thanks for pla-"
     stop music
+    "A phone rings in Natsuki's pocket. She pulls it out."
+    n 1b "Really? Who could be possibly calling me at this ti-"
+    play music t7
+    n 1c "..."
+    "Natsuki picks up the phone."
+    n "Yuri?"
+    y "H-Hey, Natsuki..."
+    y "I finished reading the manga you recommended me..."
+    n "The manga I recommended you?"
+    y "The Amigara of Enigma Fault..."
+    n 1t "Oh, yeah..."
+    n "So...did you like it?"
+    y "I have thoroughly enjoyed it."
+    y "To think that a piece of manga can be so intriguing..."
+    y "And...did you enjoy reading the Portrait of Markov?"
+    n 1c "I, uhh.."
+    n "{i}(I haven't gotten past the first chapter! That book is so hard to read-){/i}"
+    n "I liked the cover?"
+    y "...Perhaps I should have recommended a lighter reading."
+    n 1b "Are you saying I-"
+    y "In fact, you should come to my house tomorrow night so I can give it to you in person."
+    n 1c "..."
+    y "Is that acceptable?"
+    n "Yeah...definitely...acceptable..."
+    y "Excellent. See you then. Goodbye."
+    n "Goodbye..."
+    "(Natsuki ends the call and puts the phone back in her pocket.)"
+    n "Okay, so Yuri just called me to her place..."
+    "(Natsuki pulls out a pile of papers.)"
+    n "MousePotatoDoesStuff, are you sure this is supposed to happen?"
+    moddev "Check the secret ending."
+    n "Oh..."
+    n "So, she's inviting me to her house...as a friend?"
+    stop music
+    play sound "sfx/fall.ogg"
+    n "..."
+    n "Hang on a minute, [player]. MousePotatoDoesStuff just facepalmed himself unconscious."
+    hide natsuki
+    $ pause(2)
+
+label p3_normal:
     show monika_bg zorder 1
     play music m1 noloop
     m "Hello again, [player]!"
-    m "If you are reading this, you have reached the test secret ending."
-    m "The real secret ending will be available upon release"
-    m "Thank you for making sure the game is working properly!"
+    m "Now that the game is over, we can finally be together."
+    m "Just the two of us."
     stop music
     n "And that's it for TMIWNHANDANHHTHTYVM!"
     n "Thanks for playing!"

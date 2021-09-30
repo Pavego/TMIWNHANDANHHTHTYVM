@@ -257,6 +257,13 @@ image m_sticker:
             function randomMoveMonika
         repeat
 
+image mc_sticker hop:
+    "images/chibi_protag/mcchibijump.png"
+    xoffset mcOffset xzoom mcZoom
+    sticker_jump
+    xoffset 0 xzoom 1
+    "mc_sticker"
+
 image s_sticker jumps:
     "gui/poemgame/s_sticker_2.png"
     xoffset sayoriOffset xzoom sayoriZoom

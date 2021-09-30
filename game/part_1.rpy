@@ -34,7 +34,7 @@ label p1_start:
         timeSkips=[7*60+0,11*60+0,15*60+0,19*60+0]
         X=[0,0]
         outfit_responses=[
-            ["Well...back to square one.",1,'c'],["We don't have pyjama CGs yet so we reused these casual ones."],["I'm not going to school today, "+player+"...",4,'b']]
+            ["Well...back to square one.",1,'c'],["We don't have pyjama CGs yet so we reused these casual ones.",1,'c'],["I'm not going to school today, "+player+"...",4,'b']]
         outfit_choices=[0,0,0]
         outfit_choice_count=0
         currently_read_manga=0
@@ -101,12 +101,15 @@ label bedroom_loop:
                     pause(1)
                     current_time+=5
                     n_outfit_mode=decision
-                    ch_natsuki.outfit=n_outfits[n_outfit_mode]
+                    ch_natsuki['outfit']=n_outfits[n_outfit_mode]
                     decision=outfit_responses[n_outfit_mode]
                     outfit_responses[n_outfit_mode]=None
                     if decision is not None:
                         decision.extend([None,None,None])
-                show natsuki 1a zorder 2 at h33
+                if n_outfit_mode==2:
+                    show natsuki 1b zorder 2 at h11
+                else:
+                    show natsuki 1bb zorder 2 at h11
                 if decision is not None:
                     call char_s(ch_natsuki,decision[0],decision[1],decision[2])
         "Check bus schedule":
@@ -114,13 +117,16 @@ label bedroom_loop:
         "Go...":
             menu:
                 "To the bathroom":
-                    hide natsuki
-                    n "You stay outside! I'm not giving you details about my bathroom routine!"
-                    n "Not to mention we don't have a bathroom CG..."
-                    $ pause(2)
-                    "Ten minutes and a toilet flush later..."
-                    $ current_time+=10
-                    $ chores[0]=True
+                    if chores[0]:
+                        call char_s(ch_natsuki,"I already did what I need to do there!",1,"z")
+                    else:
+                        hide natsuki
+                        n "You stay outside! I'm not giving you details about my bathroom routine!"
+                        n "Not to mention we don't have a bathroom CG..."
+                        $ pause(2)
+                        "Ten minutes and a toilet flush later..."
+                        $ current_time+=10
+                        $ chores[0]=True
                 "To the kitchen":
                     jump kitchen_loop_start
                 "Back to bed":

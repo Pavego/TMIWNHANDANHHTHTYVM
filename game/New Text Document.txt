@@ -1,8 +1,6 @@
-TODO: delete this note before uploading
-
-Final development plans
--universal ending screen with information
--achievements (push back to post-release update?)
--secret ending?
--sequel teaser?
--debugging, hopefully with help from testers
+Final development plans (and success data)
+-universal ending screen with information (different implementation)
+-achievements (pushed back to possible post-release update)
+-secret ending? (yes)
+-sequel teaser? (yes)
+-debugging, hopefully with help from testers (done)

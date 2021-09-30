@@ -1,0 +1,26 @@
+python:
+    class char_visual:
+        def __init__(self,name,pose,outfit,head):
+            self.name=name
+            self.pose=pose
+            self.outfit=outfit
+            self.head=head
+        def get(self):
+            return "{} {}{}{}".format(self.name,self.pose,self.outfit,self.head)
+
+label char_s(character,speech=None,pose=None,head=None):
+    call char_v(character,speech,None,pose,None,head)
+
+label char_v(character,speech=None,name=None,pose=None,outfit=None,head=None,z_order=3,):
+    if name!=None:
+        $ character.name=name
+    if pose!=None:
+        $ character.pose=pose
+    if outfit!=None:
+        $ character.outfit=outfit
+    if head=None:
+        $ character.head=head
+    $ renpy.show(character.get(),zorder=z_order)
+    if speech!=None:
+        $ character.name(speech) 
+    return
