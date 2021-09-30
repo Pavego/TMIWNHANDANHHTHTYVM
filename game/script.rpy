@@ -2,7 +2,6 @@
 
 
 label start:
-    $ moddev = "MousePotatoDoesStuff"
     $ config.developer=True
     $ anticheat = persistent.anticheat
 
@@ -27,39 +26,71 @@ label start:
     $ n_outfit_mode = 0
     $ n_outfits = ['b','b','']
     $ n_outfit = 'b'
+    $ ch_natsuki=dict()
+    $ ch_natsuki['call']=n
+    $ ch_natsuki['name']='natsuki'
+    $ ch_natsuki['pose']='1'
+    $ ch_natsuki['outfit']='b'
+    $ ch_natsuki['head']='a'
+    $ gameBegan=False
     if persistent.playthrough == 0:
         call nat_welcome
-    elif persistent.playthrough == 1:
+    else:
         call nat_intro
     call p1_start
+    $ gameBegan=True
     call p2_start
+    call p3_start
 
-
-label ending(ending_id=0):
+label ending(ending_name, ending_detailed_name=None):
+    $ ending_title=ending_name
+    $ ending_title+=(" "+ending_detailed_name) if ending_detailed_name is not None else ""
     scene bg black
     stop music
     hide natsuki
     window hide
     python:
-
-    image exception_bg = "#dadada"
-    image fake_exception = Text("An ending has occurred.", size=40, style="_default")
-    $ ending_text="Ending {}.".format(ending_id)
-    image fake_exception2 = Text(, size=20, style="_default")
-    image fake_exception2 = Text("File \"game/script.rpy\", line 35\nSee traceback.txt for details.", size=20, style="_default")
+        with renpy.file("endings.txt") as ending_file:
+            record=True
+            L=[]
+            b=False
+            for line in ending_file:
+                line = line.strip()
+                ending_list=line.split(" ")+["",""]
+                if ending_list[0]=='<ending>':
+                    b=ending_list[1]==ending_name
+                    if b:
+                        L.append(ending_name+"\n")
+                    continue
+                if b:
+                    L.append(line)
+                    if line=="<norecord>":
+                        record=False
+            if record:
+                persistent.endingsAchieved.add(ending_name)
+            L.append("\nEndings achieved:")
+            for e in persistent.endingsAchieved:
+                L.append(e)
+            L.append("\n\nNext episode of Parfait Girls: "+str(persistent.next_parfait))
+    image fauxception = Text("An ending has occurred.", size=40, style="_default")
+    image fauxception2 = Text("See ending.txt for details.", size=20, style="_default")
     show exception_bg zorder 2
-    show fake_exception zorder 2:
+    show fauxception zorder 2:
         xpos 0.1 ypos 0.05
-    show fake_exception2 zorder 2:
+    show fauxception2 zorder 2:
         xpos 0.1 ypos 0.15
     python:
-        try: sys.modules['renpy.error'].report_exception("ScriptError: could not find label 'p2_start'.", False)
-        except: pass
-    $ pause(1)
+        F=open("ending.txt","w")
+        F.write("\n".join(L))
+        F.close()
+        persistent.endings_test=time.time()
+    if gameBegan:
+        $ persistent.playthrough+=1
+    $ pause(2)
+    $ renpy.quit()
+    
 
 
 label endgame(pause_length=4.0):
-    "If you are reading this, it means that an ending is missing."
-    "Please report this bug as instructed in the README file."
     return
 # Decompiled by unrpyc: https://github.com/CensoredUsername/unrpyc

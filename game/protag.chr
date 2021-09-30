@@ -1,0 +1,13 @@
+label p3_start:
+    stop music
+    show monika_bg zorder 1
+    play music m1 noloop
+    m "Hello again, [player]!"
+    m "If you are reading this, you have reached the test secret ending."
+    m "The real secret ending will be available upon release"
+    m "Thank you for making sure the game is working properly!"
+    stop music
+    n "And that's it for TMIWNHANDANHHTHTYVM!"
+    n "Thanks for playing!"
+    m "NATSUKI, IF YOU CLOSE THE GAME ON ME, I SWEAR TO SALVATO-{nw}"
+    call ending('SecretEnding',"Secret Ending")

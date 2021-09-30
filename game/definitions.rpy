@@ -144,6 +144,16 @@ image bg notebook-glitch = "bg/notebook-glitch.png"
 
 image bg glitch = LiveTile("bg/glitch.jpg")
 
+image bg natsukiroom_morning = "images/bg/natsukiroom_dusk.png"
+image bg natsukiroom_day = "images/bg/natsukiroom_day.png"
+image bg natsukiroom_evening = "images/bg/natsukiroom_dusk.png"
+image bg natsukiroom_night = "images/bg/nroom_night.png"
+
+image bg living_room_morning = "images/bg/MC_Living_room_afternoon.png"
+image bg living_room_day = "images/bg/MC_Living_room_daytime.png"
+image bg living_room_evening = "images/bg/MC_Living_room_afternoon.png"
+image bg living_room_night = "images/bg/MC_Living_room_night.png"
+
 image glitch_color:
     ytile 3
     zoom 2.5
@@ -225,6 +235,20 @@ image glitch_color2:
         linear 0.45 alpha 0
 
 
+python:
+    '''
+    def MakeImageConstructionRequestsFor(dokiName,facialExpressions):
+        imageConstructionRequests=[
+            [dokiName,{'1':('1','1')},facialExpressions]
+            [dokiName,{'2':('1','2')},facialExpressions]
+            [dokiName,{'3':('2','1')},facialExpressions]
+            [dokiName,{'4':('2','2')},facialExpressions]
+        ]
+        return imageConstructionData
+    def MakeImageConstructionRequests():
+        imageConstructionRequests=[]
+        imageConstructionRequests+=MakeImageConstructionRequestsFor("sayori",["","a-y"])
+    '''
 
 
 image sayori 1 = im.Composite((960, 960), (0, 0), "sayori/1l.png", (0, 0), "sayori/1r.png", (0, 0), "sayori/a.png")

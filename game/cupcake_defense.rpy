@@ -118,7 +118,7 @@ label cupcake_defense(transition=True, cd_file='cupcakewords.txt'):
     scene bg notebook
     show screen quick_menu
     show s_sticker at sticker_left
-    show y_sticker at sticker_mid
+    show mc_sticker at sticker_mid
     show m_sticker at sticker_right
     if transition:
         with dissolve_scene_full
@@ -152,7 +152,7 @@ label cupcake_defense(transition=True, cd_file='cupcakewords.txt'):
             a+=t.sPoint
             b+=t.mPoint
             c+=t.mcPoint
-    call screen dialog("{} {} {}".format(a,b,c), ok_action=Return())
+    # call screen dialog("{} {} {}".format(a,b,c), ok_action=Return())
     python:
         outcome=-1
         sPointTotal = 0
@@ -196,7 +196,7 @@ label cupcake_defense(transition=True, cd_file='cupcakewords.txt'):
             if t.sPoint!=0:
                 renpy.show("s_sticker hop")
             if t.mcPoint!=0:
-                renpy.show("y_sticker hop")
+                renpy.show("mc_sticker hop")
             if t.mPoint!=0:
                 renpy.show("m_sticker hop")
             sPointTotal += t.sPoint
@@ -213,7 +213,7 @@ label cupcake_defense(transition=True, cd_file='cupcakewords.txt'):
         if sPointTotal >= WIN_CONDITION:
             WIN_CONDITION=sPointTotal
             outcome=0
-    call screen dialog("Sayori:{}\nMC:{}\nMonika:{}".format(sPointTotal,mcPointTotal,mPointTotal), ok_action=Return())
+    call screen dialog("Sayori:{}\n{}:{}\nMonika:{}".format(sPointTotal,protag_name,mcPointTotal,mPointTotal), ok_action=Return())
     $ config.allow_skipping = True
     $ allow_skipping = True
     stop music fadeout 2.0
@@ -235,15 +235,15 @@ image s_sticker:
             function randomMoveSayori
         repeat
 
-image y_sticker:
-    "gui/poemgame/y_sticker_1.png"
-    xoffset yuriOffset xzoom yuriZoom
+image mc_sticker:
+    "images/chibi_protag/chibi_hover.png"
+    xoffset mcOffset xzoom mcZoom
     block:
-        function randomPauseYuri
+        function randomPauseMC
         parallel:
             sticker_move_n
         parallel:
-            function randomMoveYuri
+            function randomMoveMC
         repeat
 
 image m_sticker:
@@ -264,12 +264,12 @@ image s_sticker jumps:
     xoffset 0 xzoom 1
     "s_sticker"
 
-image y_sticker jumps:
-    "gui/poemgame/y_sticker_2.png"
-    xoffset yuriOffset xzoom yuriZoom
+image mc_sticker jumps:
+    "images/chibi_protag/mcchibijump.png"
+    xoffset mcOffset xzoom mcZoom
     sticker_jump
     xoffset 0 xzoom 1
-    "y_sticker"
+    "mc_sticker"
 
 image m_sticker jumps:
     "gui/poemgame/m_sticker_2.png"

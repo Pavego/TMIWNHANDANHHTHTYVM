@@ -1,0 +1,8 @@
+Minikle and Nuxill#7870
+-natsukiroom_day (midday)
+-natsukiroom_dusk (morning and evening)
+Rez#6478
+-nroom_night
+
+image bg park = "mod_assets/park.png"
+https://drive.google.com/drive/folders/1yTohcOnGV6Kw6Lru1cITWt-zwRoGSCm_

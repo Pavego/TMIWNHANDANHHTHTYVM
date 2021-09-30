@@ -1,5 +1,5 @@
 label p1_start:
-    scene bg bedroom
+    scene bg natsukiroom_morning
     show natsuki 1bw zorder 2 at h33
     play music t6
     n "{i}yawn{/i}"
@@ -16,74 +16,99 @@ label p1_start:
     n 1bl "But I have a feeling today is going to be great!"
     n "Father went on a business trip.."
     n 1bz "(To the recycle bin...)"
-    n 1bd "And I'm going to MC's house to bake cupcakes for the festival!"
+    n 1bd "And I'm going to [protag_name]'s house to bake cupcakes for the festival!"
     n 1bc "Okay, let's see..."
     n "First, I need to get myself in order."
     n "I can't go there looking as messy as Sayori..."
     n "Seriously, why doesn't she care about her appearance in the slightest?"
     n "I also need to put all the stuff we'll need in my bag."
-    n "I'm not sure if I can trust MC with getting the right ingredients..."
+    n "I'm not sure if I can trust [protag_name] with getting the right ingredients..."
     n "And I should also rearrange my manga collection."
     n 1bg "..."
     n 1bd "Oh, I completely forgot about you!"
     n "You know what?"
     n "I'll let you do the routine planning part!"
-    $ time_display="Time not calculated"
-    $ time=7*60+0
-    $ X=[0,0]
-    $ outfit_responses=["Well...back to square one.","We don't have pyjama CGs yet so we reused these casual ones.","I'm not going to school today, "+player+"..."]
-    $ outfit_choice_count=0
-    $ currently_read_manga=0
-    $ asked_for_recipe=0
+    python:
+        time_display="Time not calculated"
+        current_time=7*60+0
+        timeSkips=[7*60+0,11*60+0,15*60+0,19*60+0]
+        X=[0,0]
+        outfit_responses=[
+            ["Well...back to square one.",1,'c'],["We don't have pyjama CGs yet so we reused these casual ones."],["I'm not going to school today, "+player+"...",4,'b']]
+        outfit_choices=[0,0,0]
+        outfit_choice_count=0
+        currently_read_manga=0
+        asked_for_recipe=0
+        ch_natsuki['call']=n
     jump bedroom_loop
 
 label update_time_display:
-    $ time_display=tdc(time)
+    $ time_display=tdc(current_time)
     return
 
+label update_bg_part_1(dayState=0):
+    if dayState<2:
+        scene bg natsukiroom_night
+        return
+    if dayState==2:
+        scene bg natsukiroom_morning
+        return
+    if dayState<5:
+        scene bg natsukiroom_day
+        return
+    if dayState==5:
+        scene bg natsukiroom_evening
+        return
+    scene bg natsukiroom_night
+    return
+    
+
 label bedroom_loop:
-    scene bg bedroom
+    $ timeState=current_time//(60*3)
+    call update_bg_part_1(timeState%8)
+    call char_v(ch_natsuki,None,)
     if n_outfit_mode==2:
         show natsuki 1a zorder 2 at h33
     else:
         show natsuki 1ba zorder 2 at h33
-    if time>=11*60+45:
+    if current_time>=11*60+45:
+        if current_time>=31*60:
+            jump super_late_ending
         jump late_ending
+    if current_time<7*60:
+        jump cheater_ending
     call update_time_display
     menu:
         "Time: [time_display]"
         "Change clothes":
-            $ choice=-1
+            $ decision=-1
             menu:
                 "Pyjamas":
-                    $ choice=0
+                    $ decision=0
                 "Casual":
-                    $ choice=1
+                    $ decision=1
                 "School uniform":
-                    $ choice=2
-            if choice==n_outfit_mode:
-                call pose_1z("I\'m already wearing that, dummy!")
-                call pose_1a("{nw}")
+                    $ decision=2
+            if decision==n_outfit_mode:
+                call char_v(ch_natsuki,"I\'m already wearing that, dummy!",None,1,None,'z')
+                call char_s(ch_natsuki,"{nw}",1,'a')
             else:
                 $ outfit_choice_count+=1
                 if outfit_choice_count==20:
-                    call pose_4b("Jeez, can you make up your mind already?")
+                    call char_s(ch_natsuki,"Jeez, can you make up your mind already?",4,'b')
                 hide natsuki
                 python:
                     pause(1)
-                    time+=5
-                    n_outfit_mode=choice
-                    n_outfit=n_outfits[n_outfit_mode]
-                    choice=outfit_responses[n_outfit_mode]
-                    outfit_responses[n_outfit_mode]="{nw}"
+                    current_time+=5
+                    n_outfit_mode=decision
+                    ch_natsuki.outfit=n_outfits[n_outfit_mode]
+                    decision=outfit_responses[n_outfit_mode]
+                    outfit_responses[n_outfit_mode]=None
+                    if decision is not None:
+                        decision.extend([None,None,None])
                 show natsuki 1a zorder 2 at h33
-                if choice!="":
-                    if n_outfit_mode==0:
-                        call pose_1c(choice)
-                    elif n_outfit_mode==1:
-                        call pose_4d(choice)
-                    elif n_outfit_mode==2:
-                        call pose_4b(choice)
+                if decision is not None:
+                    call char_s(ch_natsuki,decision[0],decision[1],decision[2])
         "Check bus schedule":
             call check_bus_schedule
         "Go...":
@@ -94,21 +119,21 @@ label bedroom_loop:
                     n "Not to mention we don't have a bathroom CG..."
                     $ pause(2)
                     "Ten minutes and a toilet flush later..."
-                    $ time+=10
+                    $ current_time+=10
                     $ chores[0]=True
                 "To the kitchen":
                     jump kitchen_loop_start
                 "Back to bed":
-                    $ choice=outfit_responses[0]
-                    "[choice]???"
-                    if choice=="{nw}":
-                        call pose_1d("Well, if you say so...")
+                    $ decision=outfit_responses[0]
+                    if decision==None:
+                        call char_s(ch_natsuki,"Well, if you say so...",1,'d')
                         hide natsuki
+                        scene bg natsukiroom_night
                         "And so, Natsuki went back to sleep and dreamed about kittens and cupcakes."
                         "Congratulations, you got the bad ending-"
                         "Hold on."
                         "Sorry, my bad. This is the BED ending."
-                        $ renpy.quit()
+                        call ending("BedEnding", "Bed ending")
                 "(Back)":
                     pass
         "Look at bookshelf":
@@ -120,71 +145,71 @@ label bedroom_loop:
                     show natsuki 1b zorder 2 at h11
                 else:
                     show natsuki 1bb zorder 2 at h11
-                call pose_1b("Hey! Are you listening to me?")
+                call char_v(ch_natsuki,"Hey! Are you listening to me?",None,1,None,'b')
                 n "We need to put the manga back in order!"
                 n "Here, take this box and sort the manga in it alphabetically first and numerically second!"
                 call mangasort
                 $ chores[2]=True
                 scene bg bedroom
                 if difficulty==0:
-                    call pose_1c("Oh, they're already sorted?")
-                    $ time+=5
+                    call char_v(ch_natsuki,"Oh, they're already sorted?",None,1,None,'c')
+                    $ current_time+=5
                 else:
                     python:
                         _a,_b=divmod(progress, difficulty)
                         _result=_a+int(_b!=0)
-                    $ time+=5*_result
+                    $ current_time+=5*_result
                     if _result<=2:
-                        call pose_1d("You're already done? Great!")
+                        call char_s(ch_natsuki,"You're already done? Great!",1,'d')
                     elif _result<=6:
-                        call pose_1d("We're done!")
+                        call char_s(ch_natsuki,"We're done!",1,'d')
                     else:
-                        call pose_1b("What took you so long?")
+                        call char_s(ch_natsuki,"What took you so long?",1,'b')
             else:
                 jump manga_talk
     jump bedroom_loop
 
 label manga_talk:
     if currently_read_manga==0:
-        call pose_1b("We already sorted the manga!")
-        call pose_1c("Although, I could read one new episode of Parfait Girls...")
+        call char_s(ch_natsuki,"We already sorted the manga!",1,'b')
+        call char_s(ch_natsuki,"Although, I could read one new episode of Parfait Girls...",1,'c')
         menu:
             "Sure, why not?\n(Read Parfait Girls #[persistent.next_parfait])":
                 $ pause(2)
-                $ time+=30
+                $ current_time+=30
                 $ currently_read_manga+=1
                 $ persistent.next_parfait+=1
-                call pose_1d("That was fun!")
+                call char_s(ch_natsuki,"That was fun!",1,'d')
             "No.":
-                call pose_1b("Fine.")
+                call char_s(ch_natsuki,"Fine.",1,'b')
                 jump bedroom_loop
     if currently_read_manga==1:
-        call pose_1c("Let's read another episode!")
+        call char_s(ch_natsuki,"Let's read another episode!",1,'c')
     if currently_read_manga<2:
         menu:
             "Sure, why not?\n(Read Parfait Girls #[persistent.next_parfait])":
-                $ time+=30
+                $ current_time+=30
                 $ currently_read_manga+=1
                 $ persistent.next_parfait+=1
             "No. We need to focus on the festival.":
-                call pose_1b("Fine.")
+                call char_s(ch_natsuki,"Fine.",1,'b')
                 jump bedroom_loop
-    $ loop_time=["Come on...","We got time for another one...","Let's read another episode!"]
+    $ loop_time=["Come on...","We have time for another one...","Let's read another episode!"]
     jump manga_loop_talk
 
 label manga_loop_talk:
     $ loop_pop=loop_time.pop()
-    call pose_1c(loop_pop)
+    call char_v(ch_natsuki,loop_pop,1,'c')
     menu:
         "Okay.\n(Read Parfait Girls #[persistent.next_parfait])":
-            $ time+=30
+            $ current_time+=30
             $ persistent.next_parfait+=1
         "No. We need to focus on the festival.":
             if loop_pop!="Come on...":
                 jump manga_loop_talk
-            call pose_1b("Fine.")
+            call char_s(ch_natsuki,"Fine.",1,'b')
             jump bedroom_loop
-    call pose_1d("Let's read a few more!")
+    call char_s(ch_natsuki,"Let's read a few more!",1,'d')
     menu:
         "Yes.":
             pass
@@ -193,7 +218,7 @@ label manga_loop_talk:
         "Absolutely!":
             pass
         "You're not giving me a choice here, are you?":
-            call pose_1z("Nope!")
+            call char_s(ch_natsuki,"Nope!",1,'z')
         "Just Monika.":
             pass
         "...":
@@ -202,8 +227,8 @@ label manga_loop_talk:
     $ persistent.next_parfait+=22
     "And so, Natsuki spent the rest of the day reading Parfait Girls."
     "Which was okay, because this reality is an illusion and there will be no consequences to her actions."
-    "Manga Ending" # ending
-    $ renpy.quit()
+    "The Otaku Ending"
+    call ending("MangaEnding", "The Otaku Ending")
 
 label kitchen_loop_start:
     scene bg kitchen
@@ -215,7 +240,7 @@ label kitchen_loop_start:
     jump kitchen_loop
 
 label kitchen_loop:
-    if time>=11*60+45:
+    if current_time>=11*60+45:
         jump late_ending
     call update_time_display
     menu:
@@ -226,14 +251,14 @@ label kitchen_loop:
             call prepare_supplies
         "Go back to bedroom":
             jump bedroom_loop
-        "Go to MC's house":
+        "Go to [protag_name]'s house":
             jump p1_end
     jump kitchen_loop
 
 label check_bus_schedule:
-    call pose_4b("There is a bus line passing near here every half an hour.")
+    call char_s(ch_natsuki,"There is a bus line passing near here every half an hour.",4,'c')
     python:
-        a,b=divmod(time,30)
+        a,b=divmod(current_time,30)
         nextbus=(a+int(b!=0))*30
         nb2=nextbus+30
         nb3=nb2+30
@@ -244,19 +269,22 @@ label check_bus_schedule:
     n "It will take me some time to carry the bag there..."
     n "...about 15 minutes, I guess..."
     n "...and if I don't make it on the 12:00 bus, we won't have enough time for baking."
-    call pose_4d("Better make every second count!")
-    $ time+=5
+    call char_s(ch_natsuki,"Better make every second count!",4,'d')
+    $ current_time+=5
     return
 
 label prepare_supplies:
     if asked_for_recipe==0:
-        call pose_1c("Um..."+player+"?")
-        $ os.remove(config.basedir + "/characters/cupcake_recipe.txt")
+        call char_s(ch_natsuki,"Um..."+player+"?",1,'c')
+        python:
+            F=open(config.basedir + "/characters/cupcake_recipe.txt","w")
+            F.close()
+            os.remove(config.basedir + "/characters/cupcake_recipe.txt")
         n "I can't find my cupcake recipe anywhere..."
         n "Can you check if it's in the game folder?"
         n "If you find it, copy it in the characters folder and choose this option again."
         $ asked_for_recipe=1
-        $ time+=20
+        $ current_time+=20
         return
     else:
         python:
@@ -266,45 +294,69 @@ label prepare_supplies:
             except:
                 F=None
         if F==None:
-            call pose_1c("I still can't find my cupcake recipe...")
+            call char_s(ch_natsuki,"I still can't find my cupcake recipe...",1,'c')
             n "Can you check if it's in the game folder?"
             n "If you find it, copy it in the characters folder and choose this option again."
-            $ time+=20
+            $ current_time+=20
             return
-        call pose_1d("That's it!")
+        call char_s(ch_natsuki,"That's it!",1,'d')
         n "Now I just have to put all the ingredients in my bag..."
         "{i}Natsuki proceeds to fill her bag with cooking ingredients and supplies.{/i}"
         "{i}...{/i}"
         "{i}HOW DID SHE FIT A WHOLE OVEN IN THERE?!?{/i}"
         $ chores[1]=True
-        $ time+=60
+        $ current_time+=60
     return
 
 label late_ending:
-    call pose_1b("We'll probably be late now...")
-    call pose_4z("Might as well stay in and read Parfait Girls!")
+    call char_s(ch_natsuki,"We'll probably be late now...",1,'c')
+    call char_s(ch_natsuki,"Might as well stay in and read Parfait Girls!",4,'z')
     hide natsuki
+    $ persistent.next_parfait+=18
     "The procrastinator's ending"
+    call ending("LateEnding", "The procrastinator's ending")
+    $ renpy.quit()
+
+label super_late_ending:
+    call char_s(ch_natsuki,"How did you manage to spend 24 ingame hours on this part of the mod?!?",1,'b')
+    hide natsuki
+    $ persistent.next_parfait+=18
+    "The dedicated time waster's ending"
+    call ending("SuperLateEnding", "The dedicated time waster's ending")
+    $ renpy.quit()
+
+label cheater_ending:
+    call char_s(ch_natsuki,"Wait a minute.",1,'b')
+    call char_s(ch_natsuki,"You somehow cheated to lower the time!",4,'b')
+    call char_s(ch_natsuki,"How - and more importantly, why - did you do this?",4,'b')
+    $ delete_all_saves()
+    call char_s(ch_natsuki,"Never mind. I just deleted all your saves.",5,'b')
+    call char_s(ch_natsuki,"Goodbye.",5,'b')
+    hide natsuki
+    $ persistent.next_parfait+=18
+    "The cheater's ending"
+    call ending("CheaterEnding", "The cheater's ending")
     $ renpy.quit()
 
 label p1_end:
+    call char_s(ch_natsuki,None,4,'b')
     if n_outfit_mode==0:
-        call pose_4b("Seriously? In my pyjamas? Forget it!")
+        call char_s(ch_natsuki,"Seriously? In my pyjamas? Forget it!",)
         jump kitchen_loop
     if not chores[0]:
-        call pose_4b("I can't go to MC's house like this, I'm not Sayori!")
+        call char_s(ch_natsuki,"I can't go to [protag_name]'s house like this, I'm not Sayori!")
         jump kitchen_loop
     if not chores[1]:
-        call pose_4b("And how exactly am I supposed to bake cupcakes without the ingredients?")
+        call char_s(ch_natsuki,"And how exactly am I supposed to bake cupcakes without the ingredients?")
         n "It's not like I can magically bring cupcakes into existence or anything!"
         menu:
             "Okay, I got it.":
                 jump kitchen_loop
             "...":
                 pass
-        call pose_4g("...")
-        call pose_4c("Okay, I can do that...")
-        call pose_4c("But that would defeat the whole point of going to MC's house to bake cupcakes!")
+        call char_s(ch_natsuki,"...",4,'g')
+        call char_s(ch_natsuki,"Okay, I can do that...",4,'c')
+        call char_s(ch_natsuki,"But that would defeat the whole point of going to [protag_name]'s house to bake cupcakes!",4,'c')
         n "Let's just go back and get the ingredients, dummy!"
         jump kitchen_loop
     return
@@ -319,6 +371,6 @@ python:
             _m=None
         if _c!="@qó-í&Œ£øªYAódáô-P­IÓÉ*":
             n "I don't think that's the recipe..."
-            $ time+=20
+            $ current_time+=20
             return
     """

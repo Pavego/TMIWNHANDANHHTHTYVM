@@ -17,10 +17,12 @@ label nat_welcome:
                     m "Well, I'll be here when you're ready to talk."
                 "...No.":
                     m "It's okay, you don't have to pretend with me."
-                    m "{b}*hugs*{/b} I am here for you."
+                    "(Monika hugs you.)"
+                    m "I am here for you."
                     $ pause(5.0)
         "...awful.":
-            m "{b}*hugs*{/b} I am here for you."
+            "(Monika hugs you.)"
+            m "I am here for you."
             $ pause(5.0)
         "...":
             m "..."
@@ -81,8 +83,8 @@ label nat_welcoming:
             elif silenceCount==7:
                 n 5w "I give up."
                 n "Goodbye."
-                $ persistent.endingsAchieved[1]+=1
-                $ renpy.quit()
+                $ persistent.endingsAchieved.add("SilentEnding")
+                call ending("SilentEnding", "...")
             else:
                 n 1t "The mod pretty much describes itself!"
     n 1d "I intend to have a nice day with nothing horrible happening to me."
@@ -121,7 +123,9 @@ label additional_questions:
     jump additional_questions
 
 label nat_intro:
-    show monika_room zorder 3
+    show monika_room zorder 0
+    play music t3
+    show natsuki 1c zorder 2 at t11
     n "Welcome back, [player]!"
     menu:
         n "How are you feeling today?"
@@ -136,21 +140,22 @@ label nat_intro:
                     n "Well, in that case "
                 "...No.":
                     n "It's okay, you don't have to pretend with me."
+                    "(Natsuki hugs you.)"
                     n "{b}*hugs*{/b} I am here for you."
                     $ pause(5.0)
                     n "Uuuuuu..."
                     n "But it's not like I like you or anything!"
                     n "Let's just go on and pretend this didn't happen. GOT IT?"
         "...awful.":
-            m "{b}*hugs*{/b} I am here for you."
+            n "{b}*hugs*{/b} I am here for you."
             $ pause(5.0)
-            m "Uuuuuu..."
-            m "But it's not like I like you or anything!"
+            n "Uuuuuu..."
+            n "But it's not like I like you or anything!"
+            n "Let's just go on and pretend this didn't happen. GOT IT?"
         "...":
             m "..."
             $ silenceCount+=1
     n "Let's jump straight into the plot!"
-    return
 
 label plot:
     n 1d "So, here's the plan:"
@@ -159,7 +164,23 @@ label plot:
     n 4c "...not that you had much control to begin with..."
     n 4d "Instead, you'll be joining me!"
     n "That's right - I'm the true MC of this story!"
-    n "Are you ready?"
+    if player=="Manly":
+        n "I hope you weren't expecting a manly badass hero or something..."
+    n 3c "Speaking of MC..."
+label naming_mc:
+    $ protag_name = renpy.input("What should we call him?", length=32)
+    if protag_name==player:
+        n 5c "No, that could get confusing..."
+        jump naming_mc
+    if protag_name=="MC":
+        n 5b "Wow. How original."
+    if protag_name=="Dense Boi":
+        n 5l "Hehe. Good one!"
+    if protag_name=="":
+        n 5b "Dense Boi it is, then."
+        $ protag_name = "Dense Boi"
+    n 4d "Aaaaand...done!"
+    n "Are you ready to begin?"
     menu:
         "Yes.":
             n "Let's go, then!"

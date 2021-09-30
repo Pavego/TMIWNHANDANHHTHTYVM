@@ -1,5 +1,10 @@
 init python:
+    import os
+    import stat
+    import time
+    import random
     menu_trans_time = 1
+    gameBegan = False
     splash_message_default = "This mod is not suitable for people\nwho don't enjoy slice-of-life content."
     splash_messages = [
     "Don't let Sayori eat your browser cookies!",
@@ -48,18 +53,26 @@ image menu_art_n:
 image menu_art_s:
     subpixel True
     "gui/menu_art_s.png"
-    xcenter 1000
+    xcenter 1100
     ycenter 385
-    zoom 0.60
-    menu_art_move(0.68, 1000, 0.68)
+    zoom 0.50
+    menu_art_move(0.50, 1000, 0.50)
 
 image menu_art_m:
     subpixel True
     "gui/menu_art_m.png"
     xcenter 450
     ycenter 335
-    zoom 0.60
-    menu_art_move(0.5, 510, 0.5)
+    zoom 0.50
+    menu_art_move(0.5, 335, 0.5)
+
+image menu_art_mc:
+    subpixel True
+    "images/temp_protag_menu.png"
+    xcenter 950
+    ycenter 360
+    zoom 0.45
+    menu_art_move(0.45, 360, 0.45)
 
 
 image menu_nav:
@@ -209,12 +222,12 @@ label splashscreen:
         $ restore_relevant_characters()
         $ persistent.oldversion = config.version
         $ renpy.save_persistent()
-
+    $ moddev = "MousePotatoDoesStuff"
     if not persistent.first_run:
         python:
             delete_all_saves()
             restore_all_characters()
-        $ quick_menu = False
+            quick_menu = False
         scene white
         pause 0.5
         scene tos
@@ -227,13 +240,26 @@ label splashscreen:
                 $ renpy.quit()
             "I already completed the official game.":
                 pass
+        if True:
+            n "How long until the game releases, [moddev]?"
+            moddev "Actually, it has already been released."
+            n "WAIT, WHAT?"
+            n "I still need to get my CGs!"
+            n "I'll be right back, Player!"
         scene tos2
         with Dissolve(1.5)
         pause 1.0
         scene white
         $ persistent.first_run = True
-        $ persistent.endingsAchieved = [0]*420 # No, there are not 420 endings. I just don't want to have to come back here and rewrite this AGAIN.
+        $ persistent.endingsAchieved = set()
         $ persistent.next_parfait = 7001
+        $ persistent.endings_test=time.time()
+    else:
+        python:
+            endings_accessTime = os.path.getatime('game/endings.txt')
+            completionist_ending_detected=("CompletionistEnding" not in persistent.endingsAchieved) and (endings_accessTime>persistent.endings_test)
+        if completionist_ending_detected:
+            call ending("CompletionistEnding", "The Completionist Ending")
 
     $ basedir = config.basedir.replace('\\', '/')
 
