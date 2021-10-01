@@ -84,10 +84,20 @@ label ending(ending_name, ending_detailed_name=None):
         F.write("\n".join(L))
         F.close()
         persistent.endings_test=time.time()
-    if gameBegan:
-        $ persistent.playthrough+=1
-    $ pause(2)
-    $ renpy.quit()
+        L.append("<ending>")
+        if gameBegan:
+            persistent.playthrough+=1
+        i=0
+label ending_loop:
+    python:
+        line=L[i]
+        i+=1
+    if line=="":
+        jump ending_loop
+    if line!="<ending>":
+        $ renpy.quit()
+    "[line]"
+    jump ending_loop
     
 
 

@@ -1,6 +1,8 @@
 <ending> EndingNotFound
 This is an actual error, not an ending.
+
 If you are seeing this ingame, it means that an ending is missing somewhere in the code.
+
 Please report this bug using the form linked in the README.md file.
 <ending>
 
@@ -14,14 +16,20 @@ Natsuki did not like that.
 <ending>
 
 <ending> BedEnding
-And so, Natsuki went back to sleep and dreamed about kittens and cupcakes.                Congratulations, you got the bad ending-
+And so, Natsuki went back to sleep and dreamed about kittens and cupcakes.   
+
+Congratulations, you got the bad ending-
+
 Hold on.
+
 Sorry, my mistake. This is the BED ending.
 <ending>
 
 <ending> OtakuEnding
 Natsuki spent the whole day reading manga.
+
 Was it worth it?
+
 Well, Natsuki certainly thinks so...
 <ending>
 
@@ -30,15 +38,23 @@ Natsuki was going to be late and decided to just stay home and read Parfait Girl
 <ending>
 
 <ending> SuperLateEnding
-Somehow, you managed to go all the way around to Monday 7 AM, if not further. Did you cheat? Did you accomplish this intentionally? Are you just not very good at the game? What happened to the festival? We shall never know.
+Somehow, you managed to go all the way around to Monday 7 AM, if not further.
+Did you cheat?
+Did you accomplish this intentionally?
+Are you just not very good at the game?
+What happened to the festival? We shall never know.
 <ending>
 
 <ending> CheaterEnding
-Somehow, you managed to cheat in a visual novel. Probably just to see what happens or to get this achevement. At least no one was harmed.
+Somehow, you managed to cheat in a visual novel.
+Probably just to see what happens or to get this achevement.
+At least no one was harmed.
 <ending>
 
 <ending> CompletionistEnding
-You checked this file (endings.txt) to see what endings you missed. Or you did it to receive this ending, which you will next time you open the game (unless you're already reading this post-opening). I wish you luck in your endeavour.
+You checked this file (endings.txt) to see what endings you missed.
+Or you did it to receive this ending, which you will next time you open the game (unless you're already reading this post-opening).
+I wish you luck in your endeavour.
 <ending>
 
 <ending> TalkativeEnding
@@ -51,5 +67,6 @@ While all the endings are good, this is the goodest of them all.
 
 <ending> SecretEnding
 I'm not spoiling it here, dummy!
+
 Rename protag.chr to protag.rpy and copy it to the game folder.
 <ending>
