@@ -30,7 +30,7 @@ label nat_welcome:
     m "Now, where was I..."
     play music t7
     n "MONIKA!!!!!!!"
-    show natsuki 1e zorder 2 at h22
+    show natsuki 1e zorder 2 at t22
     n "What are you doing here?"
     n "This is my mod and I get to talk to the player!"
     n 1w "I didn't spend all that time learning RenPy just so you can steal the show from me!"

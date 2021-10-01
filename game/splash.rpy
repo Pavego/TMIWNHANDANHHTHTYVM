@@ -2,6 +2,7 @@ init python:
     import os
     import stat
     import time
+
     import random
     menu_trans_time = 1
     gameBegan = False
@@ -277,15 +278,15 @@ label splashscreen:
     $ persistent.ghost_menu = False
     $ config.main_menu_music = audio.t1
     $ renpy.music.play(config.main_menu_music)
-    $ starttime = datetime.datetime.now()
+    $ starttime = time.time()
     show intro with Dissolve(0.5, alpha=True)
-    $ pause(3.0 - (datetime.datetime.now() - starttime).total_seconds())
-    hide intro with Dissolve(max(0, 3.5 - (datetime.datetime.now() - starttime).total_seconds()), alpha=True)
+    $ pause(3.0 - time.time() + starttime)
+    hide intro with Dissolve(max(0, 3.5 - time.time() + starttime), alpha=True)
     $ splash_message = renpy.random.choice(splash_messages) if random.choice([0,1])==1 else splash_message_default
-    show splash_warning "[splash_message]" with Dissolve(max(0, 8.0 - (datetime.datetime.now() - starttime).total_seconds()), alpha=True)
-    $ pause(6.0 - (datetime.datetime.now() - starttime).total_seconds())
-    hide splash_warning with Dissolve(max(0, 6.5 - (datetime.datetime.now() - starttime).total_seconds()), alpha=True)
-    $ pause(6.5 - (datetime.datetime.now() - starttime).total_seconds())
+    show splash_warning "[splash_message]" with Dissolve(max(0, 8.0 - time.time() + starttime), alpha=True)
+    $ pause(6.0 - time.time() + starttime)
+    hide splash_warning with Dissolve(max(0, 6.5 - time.time() + starttime), alpha=True)
+    $ pause(6.5 - time.time() + starttime)
     $ config.allow_skipping = True
     return
 
