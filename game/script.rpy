@@ -94,7 +94,7 @@ label ending_loop:
         i+=1
     if line=="":
         jump ending_loop
-    if line!="<ending>":
+    if line=="<ending>":
         $ renpy.quit()
     "[line]"
     jump ending_loop
