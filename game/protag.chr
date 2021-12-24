@@ -35,7 +35,7 @@ label p3_start:
     n "Okay, so Yuri just called me to her place..."
     "(Natsuki pulls out a pile of papers.)"
     n "MousePotatoDoesStuff, are you sure this is supposed to happen?"
-    moddev "Check the secret ending."
+    "MousePotatoDoesStuff" "Check the secret ending."
     n "Oh..."
     n "So, she's inviting me to her house...as a friend?"
     stop music

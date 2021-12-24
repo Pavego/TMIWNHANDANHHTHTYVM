@@ -1,31 +1,31 @@
 label p1_start:
     scene bg natsukiroom_morning
-    show natsuki 1bw zorder 2 at h33
+    show natsuki 1pw zorder 2 at h33
     play music t6
     n "{i}yawn{/i}"
-    n 1bd "Good morning, [player]!"
+    n 1pd "Good morning, [player]!"
     menu:
         "Good morning, Natsuki!":
             pass
         "...":
             pass
-    n 1bl "I had a great dream last night!"
-    n 1bz "I was sitting in a garden, surrounded by pink fluffy kittens!"
+    n 1pl "I had a great dream last night!"
+    n 1pz "I was sitting in a garden, surrounded by pink fluffy kittens!"
     n "They were so adorable!"
-    n 1bc "It almost made me wish I could stay asleep..."
-    n 1bl "But I have a feeling today is going to be great!"
+    n 1pc "It almost made me wish I could stay asleep..."
+    n 1pl "But I have a feeling today is going to be great!"
     n "Father went on a business trip.."
-    n 1bz "(To the recycle bin...)"
-    n 1bd "And I'm going to [protag_name]'s house to bake cupcakes for the festival!"
-    n 1bc "Okay, let's see..."
+    n 1pz "(To the recycle bin...)"
+    n 1pd "And I'm going to [protag_name]'s house to bake cupcakes for the festival!"
+    n 1pc "Okay, let's see..."
     n "First, I need to get myself in order."
     n "I can't go there looking as messy as Sayori..."
     n "Seriously, why doesn't she care about her appearance in the slightest?"
     n "I also need to put all the stuff we'll need in my bag."
     n "I'm not sure if I can trust [protag_name] with getting the right ingredients..."
     n "And I should also rearrange my manga collection."
-    n 1bg "..."
-    n 1bd "Oh, I completely forgot about you!"
+    n 1pg "..."
+    n 1pd "Oh, I completely forgot about you!"
     n "You know what?"
     n "I'll let you do the routine planning part!"
     python:
@@ -69,6 +69,8 @@ label bedroom_loop:
     call char_v(ch_natsuki,None,)
     if n_outfit_mode==2:
         show natsuki 1a zorder 2 at h33
+    elif n_outfit_mode==0:
+        show natsuki 1pa zorder 2 at h33
     else:
         show natsuki 1ba zorder 2 at h33
     if current_time>=11*60+45:
@@ -107,9 +109,11 @@ label bedroom_loop:
                     if decision is not None:
                         decision.extend([None,None,None])
                 if n_outfit_mode==2:
-                    show natsuki 1b zorder 2 at h11
+                    show natsuki 1b zorder 2 at h33
+                elif n_outfit_mode==0:
+                    show natsuki 1pb zorder 2 at h33
                 else:
-                    show natsuki 1bb zorder 2 at h11
+                    show natsuki 1bb zorder 2 at h33
                 if decision is not None:
                     call char_s(ch_natsuki,decision[0],decision[1],decision[2])
         "Check bus schedule":
@@ -148,9 +152,11 @@ label bedroom_loop:
                 "Natsuki has a huge manga collection."
                 "Most of it is Parfait Girls, but there are also other slice-of life novels as well as...{nw}"
                 if n_outfit_mode==2:
-                    show natsuki 1b zorder 2 at h11
+                    show natsuki 1b zorder 2 at h33
+                elif n_outfit_mode==0:
+                    show natsuki 1pb zorder 2 at h33
                 else:
-                    show natsuki 1bb zorder 2 at h11
+                    show natsuki 1bb zorder 2 at h33
                 call char_v(ch_natsuki,"Hey! Are you listening to me?",None,1,None,'b')
                 n "We need to put the manga back in order!"
                 n "Here, take this box and sort the manga in it alphabetically first and numerically second!"
@@ -240,6 +246,8 @@ label kitchen_loop_start:
     scene bg kitchen
     if n_outfit_mode==2:
         show natsuki 1a zorder 2 at h33
+    elif n_outfit_mode==0:
+        show natsuki 1pa zorder 2 at h33
     else:
         show natsuki 1ba zorder 2 at h33
     play music t6
@@ -302,6 +310,7 @@ label prepare_supplies:
         if F==None:
             call char_s(ch_natsuki,"I still can't find my cupcake recipe...",1,'c')
             n "Can you check if it's in the game folder?"
+            n "It's named cupcake_recipe.txt"
             n "If you find it, copy it in the characters folder and choose this option again."
             $ current_time+=20
             return

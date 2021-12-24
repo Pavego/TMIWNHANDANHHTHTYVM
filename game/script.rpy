@@ -24,13 +24,13 @@ label start:
     $ allow_skipping = True
     $ config.allow_skipping = True
     $ n_outfit_mode = 0
-    $ n_outfits = ['b','b','']
-    $ n_outfit = 'b'
+    $ n_outfits = ['p','b','']
+    $ n_outfit = 'p'
     $ ch_natsuki=dict()
     $ ch_natsuki['call']=n
     $ ch_natsuki['name']='natsuki'
     $ ch_natsuki['pose']='1'
-    $ ch_natsuki['outfit']='b'
+    $ ch_natsuki['outfit']='p'
     $ ch_natsuki['head']='a'
     $ gameBegan=False
     if persistent.playthrough == 0:

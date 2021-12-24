@@ -295,6 +295,11 @@ label p2_sayori_win:
     with dissolve_cg
     hide sayori with wipeleft
     protag "Sayori, take the cupcakes and go in the living room! I'll be right behind you!"
+    n "Hey!"
+    n "This isn't fair, there's two of you and only one of me!"
+    n "Unless..."
+    moddev "We are NOT doing that again."
+    n "Yawn."
     scene bg kitchen with dissolve_cg
     jump p2_either_win
 
@@ -314,6 +319,9 @@ label p2_protag_win:
     jump p2_either_win
 
 label p2_either_win:
+    stop music
+    "Some time later..."
+    $ time+=15
     play music t8
     if n_outfit_mode==2:
         show natsuki 1l zorder 2 at h11
@@ -325,7 +333,6 @@ label p2_either_win:
     jump p2_pizza
 
 label p2_neither_win:
-    play music t8
     protag 1b "She's right, Sayori."
     protag "These cupcakes are for the festival."
     protag 1a "Let's order pizza instead."
@@ -388,7 +395,7 @@ label p2_pizza:
             show protag 1n zorder 3 at h33
             s 4w "Hey! I'm not dense!"
             n "Don't worry, Sayori - [protag_name] is dense and you just got his last name, hehe."
-            s 4v "Still, that feels mean to [protag_name]"
+            s 4v "Still, that feels mean to [protag_name]..."
             protag 1o "It's okay, I don't mind."
             protag 1m "But I'm glad to know you care, Sayori."
             s 1q "Of course I do, you lovable dummy!"
@@ -412,8 +419,8 @@ label update_bg_part_2(dayState=0):
 
 label p2_conversation_start:
     python:
-        bringable_topics_def=['first_date_natsuki','weather','poems']
-        silent_topics_def=['first_date_protag','new_uses','unfinished']
+        bringable_topics_def=['first_date_natsuki','poems','unfinished']
+        silent_topics_def=['first_date_protag','new_uses','weather']
         bringable_topics=bringable_topics_def[:]
         silent_topics=silent_topics_def[:]
         talkativity=5
@@ -432,6 +439,7 @@ label p2_conversation_loop:
         jump talkative_ending
     if current_time<12*60:
         jump cheater_ending_2
+    play music t8
     menu:
         "(Lead the conversation.)":
             $ talkativity+=0
@@ -491,12 +499,13 @@ label p2_talktopic_first_date_protag:
     return
 
 label p2_talktopic_new_uses:
-    s "I need your help with something, [protag_name]..."
+    s 5a "I need your help with something, [protag_name]..."
     protag "What is it, cinnamon bun?"
-    s "Well, there's this piece of rope I didn't see any use for since last year..."
-    s "And I found some art ideas online I really like!"
+    show protag 1a zorder 2 at i33
+    s 1b "Well, there's this piece of rope I didn't see any use for since last year..."
+    s 1l "And I found some art ideas online I really like!"
     s "I just can't try some things from it myself..."
-    s "Can you come to my house next weekend and help me with it?"
+    s 5c "Can you come to my house next weekend and help me with it?"
     protag "Sure, I'll gladly help you with your art project!"
     return
 
@@ -504,35 +513,48 @@ label p2_talktopic_first_date_natsuki:
     call char_s(ch_natsuki,"Do you two remember your first date?",1,'d')
     s 1x "How could I forget?"
     s 1x "..."
-    protag "Wait...you actually forgot?"
+    protag 1d "Wait...you actually forgot?"
     call char_s(ch_natsuki,"(Let's hope no one notices this part was hastily done in the last minute.)",1,'d')
     call char_s(ch_natsuki,"(...)",1,'c')
     call char_s(ch_natsuki,"(Did I think this out loud?)",1,'p')
     return
 
 label p2_talktopic_poems:
-    n "So, what did you have in mind for poems?"
-    mc "Oh, I just found something online I'll try to recite."
-    s "I tried a new style of poem!"
-    n "Really?"
+    call char_s(ch_natsuki,"So, what did you have in mind for poems?",1,'d')
+    call char_s(ch_natsuki,None,1,'a')
+    protag 1c "Oh, I just found something online I'll try to recite."
+    s 1r "I tried a new style of poem!"
+    call char_s(ch_natsuki,"Really?",1,'d')
     s "Yeah! I wanted to challenge myself by trying something new!"
-    protag "Can we hear it?"
+    protag 1c "Can we hear it?"
     s "Sure!"
     "Sayori pulls out a piece of paper and clears her throat."
-    s "GET OUT OF MY HEAD GET OUT OF MY HEAD GET OUT OF MY HEAD GET OUT OF MY HEAD{nw}"
+    show sayori 1j zorder 2 at i31
+    show protag 1shock zorder 2 at i33
+    if n_outfit_mode==2:
+        show natsuki 1o zorder 2 at h32
+    else:
+        show natsuki 1bo zorder 2 at h32
+    stop music
+    s "GET OUT OF MY HEAD GET OUT OF MY HEAD GET OUT OF MY HEAD GET OUT OF MY HEAD GET OUT OF MY HEAD GET OUT OF MY HEAD GET OUT OF MY HEAD GET OUT OF MY HEAD GET OUT OF MY HEAD GET OUT OF MY HEAD GET OUT OF MY HEAD GET OUT OF MY HEAD"
     s "GET OUT OF MY HEAD GET OUT OF MY HEAD GET OUT OF MY HE-{nw}"
+    show sayori 1g zorder 2 at i31
     n "FOR THE LOVE OF SALVATO, STOP THIS RIGHT NOW!"
     "..."
     s "But a poem is never finished."
     s "It just stops moving."
-    protag "Uhhhhh..."
+    protag 1i "Uhhhhh..."
     n "...Maybe you should stick to your old style."
     return
 
 label p2_talktopic_unfinished:
-    s "Why aren't our faces moving?"
-    n "Because this part has been rushed due to a self-imposed deadline on the mod release. Hopefully this will be fixed by release day."
-    protag "What are you two talking about?"
+    call char_s(ch_natsuki,"The mod still isn't polished?",1,'b')
+    call char_s(ch_natsuki,None,1,'c')
+    m "Give the dev a break. This incremental progress is better than being completely abandoned."
+    protag 1d "What are you two talking about?"
+    m "Uh...a video game I've been playing recently?"
+    protag 1l "And I thought you were too busy and serious to play videogames..."
+    call char_s(ch_natsuki,"Anyway...",1,'c')
     return
 
 label p2_talktopic_weather:

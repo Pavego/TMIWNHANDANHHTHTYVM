@@ -204,6 +204,10 @@ label splashscreen:
                 "Yes, delete my existing data.":
                     "Deleting save data...{nw}"
                     python:
+                        if os.path.exists(config.basedir + "/game/protag.rpyc"):
+                            os.remove(config.basedir + "/game/protag.rpyc")
+                        if os.path.exists(config.basedir + "/game/protag.rpy"):
+                            os.remove(config.basedir + "/game/protag.rpy")
                         delete_all_saves()
                         renpy.loadsave.location.unlink_persistent()
                         renpy.persistent.should_save_persistent = False
