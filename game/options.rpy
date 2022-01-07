@@ -18,7 +18,7 @@ define config.name = "The Mod In Which Natsuki Has A Nice Day And Nothing Horrib
 
 
 
-define gui.show_name = True
+define gui.show_name = False
 
 
 
