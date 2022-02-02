@@ -127,7 +127,7 @@ label cupcake_defense(transition=True, cd_file='cupcakewords.txt'):
     $ config.allow_skipping = False
     $ allow_skipping = False
     if persistent.playthrough == 0:
-        call screen dialog("It's time to write some words on cupcakes!\n\nClub members may be tempted if there are enough words with their name on it...", ok_action=Return())
+        call screen dialog("It's time to write some words on cupcakes!\n\nClub members may be tempted if there are enough of their favourite on it...", ok_action=Return())
     python:
         WIN_CONDITION = 45
         numWords=10

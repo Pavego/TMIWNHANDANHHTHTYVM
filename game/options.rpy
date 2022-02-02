@@ -23,7 +23,7 @@ define gui.show_name = False
 
 
 
-define config.version = "1.1.0"
+define config.version = "1.1.1"
 
 
 
