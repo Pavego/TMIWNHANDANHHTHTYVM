@@ -7,5 +7,5 @@ label p3_start:
     stop music
     n "And that's it for TMIWNHANDANHHTHTYVM!"
     n "Thanks for playing!"
-    m "NATSUKI, IF YOU CLOSE THE GAME ON ME, I SWEAR TO SALVATO-{nw}"
+    m "NATSUKI, IF YOU CLOSE THE GAME ON ME, I SWEAR TO SALVATO-"
     call ending('TrueEnding',"True Ending")

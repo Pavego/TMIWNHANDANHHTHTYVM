@@ -321,7 +321,7 @@ label p2_protag_win:
 label p2_either_win:
     stop music
     "Some time later..."
-    $ time+=15
+    $ current_time+=15
     play music t8
     if n_outfit_mode==2:
         show natsuki 1l zorder 2 at h11

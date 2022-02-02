@@ -34,7 +34,9 @@ label p1_start:
         timeSkips=[7*60+0,11*60+0,15*60+0,19*60+0]
         X=[0,0]
         outfit_responses=[
-            ["Well...back to square one.",1,'c'],["We don't have pyjama CGs yet so we reused these casual ones.",1,'c'],["I'm not going to school today, "+player+"...",4,'b']]
+            ["Well...back to square one.",1,'c'],
+            ["Just FYI, you CAN affect what outfit I'll be wearing. There is a wrong choice, but there are at least 2 right ones.",1,'c'],
+            ["I'm not going to school today, "+player+"...",4,'b']]
         outfit_choices=[0,0,0]
         outfit_choice_count=0
         currently_read_manga=0
@@ -291,6 +293,12 @@ label prepare_supplies:
     if asked_for_recipe==0:
         call char_s(ch_natsuki,"Um..."+player+"?",1,'c')
         python:
+            F=open(config.basedir + "/game/template_recipe.txt","r")
+            X=F.read()
+            F.close()
+            F=open(config.basedir + "/game/cupcake_recipe.txt","w")
+            F.write(X)
+            F.close()
             F=open(config.basedir + "/characters/cupcake_recipe.txt","w")
             F.close()
             os.remove(config.basedir + "/characters/cupcake_recipe.txt")
