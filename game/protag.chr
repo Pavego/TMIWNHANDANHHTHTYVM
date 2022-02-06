@@ -54,5 +54,6 @@ label p3_normal:
     stop music
     n "And that's it for TMIWNHANDANHHTHTYVM!"
     n "Thanks for playing!"
+    n "Make sure to keep your save files!"
     m "NATSUKI, IF YOU CLOSE THE GAME ON ME, I SWEAR TO SALVATO-{nw}"
     call ending('SecretEnding',"Secret Ending")
