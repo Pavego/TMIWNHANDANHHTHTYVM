@@ -424,9 +424,11 @@ label p2_conversation_start:
         bringable_topics=bringable_topics_def[:]
         silent_topics=silent_topics_def[:]
         talkativity=5
+        current_time+=30
         repeat_topics=True
 
 label p2_conversation_loop:
+    $ current_time+=30
     $ timeState=current_time//(60*3)
     call update_bg_part_2(timeState%8)
     if n_outfit_mode==2:
@@ -442,7 +444,7 @@ label p2_conversation_loop:
     play music t8
     menu:
         "(Lead the conversation.)":
-            $ talkativity+=0
+            $ talkativity+=1
             if talkativity>10:
                 call protag_and_sayori_talk
             else:
@@ -452,7 +454,7 @@ label p2_conversation_loop:
                 "..."
                 n "(Maybe I should bring up a topic?)"
             else:
-                $ talkativity-=0
+                $ talkativity-=1
                 call protag_and_sayori_talk
         "(Politely excuse yourself.)":
             n "This was nice, but I have to go home now."
