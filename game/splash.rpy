@@ -3,7 +3,6 @@ init python:
     import stat
     import time
 
-    import random
     menu_trans_time = 1
     gameBegan = False
     splash_message_default = "This mod is not suitable for people\nwho don't enjoy slice-of-life content."
@@ -39,7 +38,7 @@ image menu_art_y:
     subpixel True
     "gui/menu_art_y.png"
     xcenter 600
-    ycenter 335
+    ycenter 395
     zoom 0.60
     menu_art_move(0.54, 600, 0.60)
 
@@ -47,7 +46,7 @@ image menu_art_n:
     subpixel True
     "gui/menu_art_n.png"
     xcenter 750
-    ycenter 385
+    ycenter 445
     zoom 0.75
     menu_art_move(0.75, 750, 0.75)
 
@@ -55,7 +54,7 @@ image menu_art_s:
     subpixel True
     "gui/menu_art_s.png"
     xcenter 1100
-    ycenter 385
+    ycenter 445
     zoom 0.50
     menu_art_move(0.50, 1000, 0.50)
 
@@ -63,15 +62,15 @@ image menu_art_m:
     subpixel True
     "gui/menu_art_m.png"
     xcenter 450
-    ycenter 335
+    ycenter 395
     zoom 0.50
     menu_art_move(0.5, 335, 0.5)
 
 image menu_art_mc:
     subpixel True
     "images/temp_protag_menu.png"
-    xcenter 950
-    ycenter 360
+    xcenter 920
+    ycenter 420
     zoom 0.45
     menu_art_move(0.45, 360, 0.45)
 
@@ -153,17 +152,17 @@ image intro:
     truecenter
     "white"
     0.5
-    "bg/splash.png" with Dissolve(0.5, alpha=True)
+    "bg/splash.png" with Dissolve(0.5)
     2.5
-    "white" with Dissolve(0.5, alpha=True)
+    "white" with Dissolve(0.5)
     0.5
 
 image warning:
     truecenter
     "white"
-    "splash_warning" with Dissolve(0.5, alpha=True)
+    "splash_warning" with Dissolve(0.5)
     2.5
-    "white" with Dissolve(0.5, alpha=True)
+    "white" with Dissolve(0.5)
     0.5
 
 image tos = "bg/warning.png"
@@ -180,20 +179,23 @@ label splashscreen:
             except:
                 pass
             try:
-                for name in ('LOGNAME', 'USER', 'LNAME', 'USERNAME'):
-                    user = os.environ.get(name)
-                    if user:
-                        currentuser = user
+                currentuser = os.environ.get("USERNAME")
+            except:
+                pass
+        elif renpy.linux or renpy.macintosh:
+            try:
+                import pwd
+                currentuser = pwd.getpwuid(os.getuid()).pw_gecos.replace(",","")
             except:
                 pass
 
-
     python:
         firstrun = ""
+        firstrun_path = (user_dir if renpy.android else config.gamedir) + "/firstrun"
         try:
-            firstrun = renpy.file("firstrun").read(1)
+            firstrun = open(firstrun_path, "rb").read(1)
         except:
-            with open(config.basedir + "/game/firstrun", "wb") as f:
+            with open(firstrun_path, "wb") as f:
                 pass
     if not firstrun:
         if persistent.first_run and (config.version == persistent.oldversion or persistent.autoload == "postcredits_loop"):
@@ -204,10 +206,10 @@ label splashscreen:
                 "Yes, delete my existing data.":
                     "Deleting save data...{nw}"
                     python:
-                        if os.path.exists(config.basedir + "/game/protag.rpyc"):
-                            os.remove(config.basedir + "/game/protag.rpyc")
-                        if os.path.exists(config.basedir + "/game/protag.rpy"):
-                            os.remove(config.basedir + "/game/protag.rpy")
+                        if os.path.exists(user_dir + "/game/protag.rpyc"):
+                            os.remove(user_dir + "/game/protag.rpyc")
+                        if os.path.exists(user_dir + "/game/protag.rpy"):
+                            os.remove(user_dir + "/game/protag.rpy")
                         delete_all_saves()
                         renpy.loadsave.location.unlink_persistent()
                         renpy.persistent.should_save_persistent = False
@@ -218,7 +220,7 @@ label splashscreen:
         python:
             if not firstrun:
                 try:
-                    with open(config.basedir + "/game/firstrun", "w") as f:
+                    with open(firstrun_path, "w") as f:
                         f.write("1")
                 except:
                     renpy.jump("readonly")
@@ -227,7 +229,6 @@ label splashscreen:
         $ restore_relevant_characters()
         $ persistent.oldversion = config.version
         $ renpy.save_persistent()
-    $ moddev = "MousePotatoDoesStuff"
     if not persistent.first_run:
         python:
             delete_all_saves()
@@ -238,35 +239,35 @@ label splashscreen:
         scene tos
         with Dissolve(1.0)
         pause 1.0
-        "The Mod In Which Natsuki Has A Nice Day And Nothing Horrible Happens To Her, Thank You Very Much is a Doki Doki Literature Club mod that is not affiliated with Team Salvato."   
+        "[config.name] is a Doki Doki Literature Club mod that is not affiliated with Team Salvato."   
         menu:
             "It is designed to be played only after the official game has been completed. You can download Doki Doki Literature Club at: http://ddlc.moe"
             "Okay, I'll do that now.":
                 $ renpy.quit()
             "I already completed the official game.":
                 pass
-        if True:
-            n "How long until the game releases, [moddev]?"
-            moddev "Actually, it has already been released."
-            n "WAIT, WHAT?"
-            n "I still need to get my CGs!"
-            n "I'll be right back, Player!"
+        n "How long until the game releases, [moddev]?"
+        moddev "Actually, it has already been released."
+        n "WAIT, WHAT?"
+        n "I still need to get my CGs!"
+        n "I'll be right back, Player!"
         scene tos2
         with Dissolve(1.5)
         pause 1.0
         scene white
-        $ persistent.first_run = True
-        $ persistent.endingsAchieved = set()
-        $ persistent.next_parfait = 7001
-        $ persistent.endings_test=time.time()
+        python:
+            persistent.first_run = True
+            persistent.endingsAchieved = set()
+            persistent.next_parfait = 7001
+            persistent.endings_test=time.time()
     else:
         python:
-            endings_accessTime = os.path.getatime('game/all_endings_list.txt')
-            completionist_ending_detected=("CompletionistEnding" not in persistent.endingsAchieved) and (endings_accessTime>persistent.endings_test)
+            endings_accessTime = os.path.getatime(user_dir + "/all_endings_list.txt")
+            completionist_ending_detected = ("CompletionistEnding" not in persistent.endingsAchieved) and (endings_accessTime > persistent.endings_test)
         if completionist_ending_detected:
             call ending("CompletionistEnding", "The Completionist Ending")
 
-    $ basedir = config.basedir.replace('\\', '/')
+    $ basedir = user_dir.replace('\\', '/')
 
 
 
@@ -316,7 +317,6 @@ label after_load:
         $ renpy.utter_restart()
     else:
         if persistent.playthrough == 0 and not persistent.first_load and not config.developer:
-            $ persistent.first_load = True
             call screen dialog("Hint: You can use the \"Skip\" button to\nfast-forward through text you've already read.", ok_action=Return())
     return
 
@@ -357,4 +357,3 @@ label readonly:
     "Please copy the DDLC application to your desktop or other accessible location and try again."
     $ renpy.quit()
     return
-# Decompiled by unrpyc: https://github.com/CensoredUsername/unrpyc

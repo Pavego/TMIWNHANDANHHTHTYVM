@@ -2,7 +2,7 @@
 
 
 label start:
-    $ config.developer=True
+    $ config.developer = True
     $ anticheat = persistent.anticheat
 
 
@@ -11,8 +11,8 @@ label start:
 
     $ _dismiss_pause = config.developer
 
-    $ chores=[False,False,False]
-    $ chore_names=["go to the bathroom","change clothes", "sort manga"]
+    $ chores = [False, False, False]
+    $ chore_names = ["go to the bathroom", "change clothes", "sort manga"]
 
     $ s_name = "Sayori"
     $ m_name = "Monika"
@@ -38,19 +38,19 @@ label start:
     else:
         call nat_intro
     call p1_start
-    $ gameBegan=True
+    $ gameBegan = True
     call p2_start
     call p3_start
 
 label ending(ending_name, ending_detailed_name=None):
-    $ ending_title=ending_name
-    $ ending_title+=(" "+ending_detailed_name) if ending_detailed_name is not None else ""
+    $ ending_title = ending_name
+    $ ending_title += (" " + ending_detailed_name) if ending_detailed_name is not None else ""
     scene bg black
     stop music
     hide natsuki
     window hide
     python:
-        with renpy.file("endings.txt") as ending_file:
+        with renpy.file("all_endings_list.txt") as ending_file:
             record=True
             L=[]
             b=False
@@ -80,7 +80,9 @@ label ending(ending_name, ending_detailed_name=None):
     show fauxception2 zorder 2:
         xpos 0.1 ypos 0.15
     python:
-        F=open("ending.txt","w")
+        import os
+
+        F = open(user_dir + "/endings.txt", "w")
         F.write("\n".join(L))
         F.close()
         persistent.endings_test=time.time()
@@ -103,4 +105,3 @@ label ending_loop:
 
 label endgame(pause_length=4.0):
     return
-# Decompiled by unrpyc: https://github.com/CensoredUsername/unrpyc

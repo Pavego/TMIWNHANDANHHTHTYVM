@@ -505,12 +505,12 @@ init -1 style navigation_button_text:
 
 
 
-init -501 screen main_menu() tag menu:
+init -501 screen main_menu():
 
 
 
 
-    style_prefix "main_menu"
+    style_prefix "main_menu" tag menu
     add "menu_bg"
     add "menu_art_m"
     add "menu_art_s"
@@ -716,8 +716,8 @@ init -1 style return_button:
 
 
 
-init -501 screen about() tag menu:
-
+init -501 screen about():
+    tag menu
 
 
 
@@ -760,15 +760,15 @@ init -1 style about_label_text:
 
 
 
-init -501 screen save() tag menu:
-
+init -501 screen save():
+    tag menu
 
 
     use file_slots(_("Save"))
 
 
-init -501 screen load() tag menu:
-
+init -501 screen load():
+    tag menu
 
 
     use file_slots(_("Load"))
@@ -897,8 +897,8 @@ init -1 style slot_button_text:
 
 
 
-init -501 screen preferences() tag menu:
-
+init -501 screen preferences():
+    tag menu
 
 
     if renpy.mobile:
@@ -1082,8 +1082,8 @@ init -1 style slider_vbox:
 
 
 
-init -501 screen history() tag menu:
-
+init -501 screen history():
+    tag menu
 
 
 

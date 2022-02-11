@@ -1,0 +1,10 @@
+*.rpyc
+*.rpymc
+.vscode
+**/cache
+**/saves
+log.txt
+traceback.txt
+errors.txt
+**/tl/russian
+*.bak

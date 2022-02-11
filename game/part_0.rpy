@@ -1,4 +1,5 @@
 label nat_welcome:
+    $ nat_curr_outfit = 0
     $ silenceCount=0
     stop music
     m "Hello, [player]!"
@@ -19,14 +20,14 @@ label nat_welcome:
                     m "It's okay, you don't have to pretend with me."
                     "(Monika hugs you.)"
                     m "I am here for you."
-                    $ pause(5.0)
+                    $ renpy.pause(5.0, hard=True)
         "...awful.":
             "(Monika hugs you.)"
             m "I am here for you."
-            $ pause(5.0)
+            $ renpy.pause(5.0, hard=True)
         "...":
             m "..."
-            $ silenceCount+=1
+            $ silenceCount += 1
     m "Now, where was I..."
     play music t7
     n "MONIKA!!!!!!!"
@@ -59,13 +60,13 @@ label nat_welcoming:
             n 1d "I don't think so. She's been feeling a lot better ever since she has me to talk to."
             n 4d "Anyway..."
         "...":
-            $ silenceCount+=1
+            $ silenceCount += 1
     n 4d "Welcome to The Mod In Which Natsuki Has A Nice Day And Nothing Horrible Happens To Her, Thank You Very Much - a mod by yours truly!"
     menu:
         "Wow! You made this mod all by yourself?":
             n 1c "Well...MousePotatoDoesStuff helped me a bit..."
         "...":
-            $ silenceCount+=1
+            $ silenceCount += 1
             n 1l "Oh, and MousePotatoDoesStuff helped me a bit..."
     n 1c "...did most of the coding, actually..."
     n 1l "But I'm doing all the talking!"
@@ -75,12 +76,12 @@ label nat_welcoming:
         "That title is, uhm...specific.":
             n 4z "I know, right? The mod pretty much describes itself!"
         "...":
-            $ silenceCount+=1
-            if silenceCount==4:
+            $ silenceCount += 1
+            if silenceCount == 4:
                 n 1m "You know a dialogue is supposed to have two people talking?"
                 n "Let's go back and try again..."
                 jump nat_welcoming
-            elif silenceCount==7:
+            elif silenceCount == 7:
                 n 5w "I give up."
                 n "Goodbye."
                 $ persistent.endingsAchieved.add("SilentEnding")
@@ -153,7 +154,7 @@ label nat_intro:
             n "But it's not like I like you or anything!"
             n "Let's just go on and pretend this didn't happen. GOT IT?"
         "...":
-            m "..."
+            n "..."
             $ silenceCount+=1
     n "Let's jump straight into the plot!"
 
@@ -169,14 +170,14 @@ label plot:
     n 3c "Speaking of MC..."
 label naming_mc:
     $ protag_name = renpy.input("What should we call him?", length=32)
-    if protag_name==player:
+    if protag_name == player:
         n 5c "No, that could get confusing..."
         jump naming_mc
-    if protag_name=="MC":
+    if protag_name == "MC":
         n 5b "Wow. How original."
-    if protag_name=="Dense Boi":
+    if protag_name == "Dense Boi":
         n 5l "Hehe. Good one!"
-    if protag_name=="":
+    if protag_name == "":
         n 5b "Dense Boi it is, then."
         $ protag_name = "Dense Boi"
     n 4d "Aaaaand...done!"
@@ -193,12 +194,12 @@ label naming_mc:
     return
 
 label proof_of_concept_intro:
-    $ persistent.endingsAchieved[0]+=1
-    $ a=persistent.endingsAchieved[0]
-    $ b=persistent.endingsAchieved[1]
+    $ persistent.endingsAchieved[0] += 1
+    $ a = persistent.endingsAchieved[0]
+    $ b = persistent.endingsAchieved[1]
     moddev "This is the true ending of the demo."
     moddev "You completed this demo [a] times."
-    if b!=0:
+    if b != 0:
         moddev "You also ended the demo early with silence [b] times."
     moddev "I didn't track how many times you reached the bad \"ending\"."
     moddev "If it's more than zero, I'm going to give you the benefit of doubt and assume you did it out of curiosity."
