@@ -18,3 +18,5 @@ Just download the mod from here and copy the content into a clean install of DDL
 Get DDLC here: [ddlc.moe](URL 'ddlc.moe')
 
 Bug report link: [https://forms.gle/2Qi5f3thwzzM5Acm6](URL 'https://forms.gle/2Qi5f3thwzzM5Acm6')
+
+Contact me on Reddit: u/mousepotatodoesstuff
