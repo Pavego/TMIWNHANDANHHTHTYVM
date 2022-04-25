@@ -156,6 +156,12 @@ label nat_intro:
             m "..."
             $ silenceCount+=1
     n "Let's jump straight into the plot!"
+    menu:
+        "YEAH!":
+            pass
+        "WAIT NO CAN WE GO BACK THROUGH THE ORIGINAL INTRO WITHOUT ME DELETING FIRSTRUN":
+            n 1c "Oh, okay..."
+            jump nat_welcome
 
 label plot:
     n 1d "So, here's the plan:"
