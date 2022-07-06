@@ -62,11 +62,15 @@ You spent too much time talking at MC's place.
 <ending>
 
 <ending> TrueEnding
-While all the endings are good, this is the goodest of them all.
+While all the endings are good, this is the goodest of them all...or is it?
 <ending>
 
 <ending> SecretEnding
 I'm not spoiling it here, dummy!
 
 Rename protag.chr to protag.rpy and copy it to the game folder.
+
+Also, keep your save file after completing the mod! You might need it...
+
+(and you might want to keep the mod installed, too)
 <ending>

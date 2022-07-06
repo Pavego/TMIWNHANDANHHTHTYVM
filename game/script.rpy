@@ -50,7 +50,7 @@ label ending(ending_name, ending_detailed_name=None):
     hide natsuki
     window hide
     python:
-        with renpy.file("endings.txt") as ending_file:
+        with renpy.file("all_endings_list.txt") as ending_file:
             record=True
             L=[]
             b=False

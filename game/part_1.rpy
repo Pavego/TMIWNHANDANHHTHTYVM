@@ -163,6 +163,12 @@ label bedroom_loop:
                 n "We need to put the manga back in order!"
                 n "Here, take this box and sort the manga in it alphabetically first and numerically second!"
                 call mangasort
+                if n_outfit_mode==2:
+                    show natsuki 1b zorder 2 at h33
+                elif n_outfit_mode==0:
+                    show natsuki 1pb zorder 2 at h33
+                else:
+                    show natsuki 1bb zorder 2 at h33
                 $ chores[2]=True
                 scene bg bedroom
                 if difficulty==0:

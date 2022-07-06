@@ -261,7 +261,7 @@ label splashscreen:
         $ persistent.endings_test=time.time()
     else:
         python:
-            endings_accessTime = os.path.getatime('game/endings.txt')
+            endings_accessTime = os.path.getatime('game/all_endings_list.txt')
             completionist_ending_detected=("CompletionistEnding" not in persistent.endingsAchieved) and (endings_accessTime>persistent.endings_test)
         if completionist_ending_detected:
             call ending("CompletionistEnding", "The Completionist Ending")
